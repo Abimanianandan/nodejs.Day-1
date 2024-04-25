@@ -6,7 +6,7 @@ const { format } = require('date-fns');
 const app = express();
 
 // Endpoint to create a text file with current date and time in a particular folder
-app.get('/createTextFile', async (req, res) => {
+app.get('/', async (req, res) => {
     const folderName = 'date & time'; // Specify the folder name here
     try {
         // Create the folder if it doesn't exist
