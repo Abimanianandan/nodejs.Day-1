@@ -7,7 +7,7 @@ const app = express();
 
 // Endpoint to create a text file with current date and time in a particular folder
 app.get('/', async (req, res) => {
-    const folderName = 'date & time'; // Specify the folder name here
+    const folderName = 'TimeStamp'; // Specify the folder name here
     try {
         // Create the folder if it doesn't exist
         await fs.mkdir(path.join(__dirname, folderName), { recursive: true });
@@ -27,6 +27,23 @@ app.get('/', async (req, res) => {
         res.status(500).send('An error occurred while creating the text file.');
     }
 });
+
+//New endpoint to retrieve all text files in a folder
+app.get("/getTextFiles", (req, res) => {
+    const folderPath = "TimeStamp";
+  
+    fs.readdir(folderPath, (err, files) => {
+      if (err) {
+        console.log(err);
+        res
+          .status(500)
+          .send("An error occured while listing the files from directory");
+      } else {
+        const textFiles = files.filter((file) => path.extname(file) === ".txt");
+        res.status(200).json(textFiles);
+      }
+    });
+  });
 
 // Start the server
 app.listen(3000)
